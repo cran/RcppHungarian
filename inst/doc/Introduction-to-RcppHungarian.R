@@ -1,11 +1,11 @@
-## ---- include = FALSE----------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.align="center"
 )
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(593903)
 
 library(RcppHungarian)
@@ -19,7 +19,7 @@ cost <- rbind(c(1,5,2,19),
               c(6,1,1,1))
 HungarianSolver(cost)
 
-## ----include=FALSE-------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 plot_arrows <- function(dat, col){
   dat <- data.frame(dat, group=col)
   colnames(dat) <- c("Coordinate 1", "Coordinate 2", "Eigenvector")
@@ -34,7 +34,7 @@ plot_arrows <- function(dat, col){
     xlim(c(-1,1))
 }
 
-## ----fig.height=5, fig.width=5-------------------------------------------
+## ----fig.height=5, fig.width=5------------------------------------------------
 # Create a distribution of matricies that have identical eigenvectors but there
 # is randomness in the eigenvalues and a tiny bit of added noise from a wishart
 const <- 1/sqrt(2)
@@ -44,10 +44,10 @@ for (i in 1:dim(Sigma)[3]){
   Sigma[,,i] <- V %*% diag(sample(c(1, 1.3))) %*% t(V) + rWishart(1, 50, 0.002*diag(2))[,,1]
 }
 
-## ----fig.height=5, fig.width=5-------------------------------------------
+## ----fig.height=5, fig.width=5------------------------------------------------
 plot_arrows(V, c("1", "2"))
 
-## ----fig.height=5, fig.width=5-------------------------------------------
+## ----fig.height=5, fig.width=5------------------------------------------------
 # Decompose each sample
 Sigma.vectors <- array(0, dim=dim(Sigma))
 for (i in 1:dim(Sigma)[3]){
@@ -62,7 +62,7 @@ dat <- rbind(t(Sigma.vectors[,1,]),
 col <- c(rep("1", dim(Sigma)[3]), rep("2", dim(Sigma)[3]))
 plot_arrows(dat, col)
 
-## ----fig.height=5, fig.width=5-------------------------------------------
+## ----fig.height=5, fig.width=5------------------------------------------------
 
 # Here is our distance function - calculates the pairwise distance
 # between two sets of vectors. 
@@ -107,6 +107,6 @@ dat <- rbind(t(Sigma.vectors[,1,]),
 col <- c(rep("1", dim(Sigma)[3]), rep("2", dim(Sigma)[3]))
 plot_arrows(dat, col)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 plot_arrows
 
